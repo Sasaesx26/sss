@@ -1,0 +1,109 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.container {
+    margin-top: 15vh;
+}
+
+.title {
+    color: red;
+    font-size: 24px;
+}
+
+input {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    width: 240px;
+}
+
+.confirm-text {
+    color: #ffcccc;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Ortadaki neon yazı */
+#centerText {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+    color: #ff1a75;
+    font-weight: 900;
+    z-index: 5;
+    text-shadow:
+        0 0 5px #ff1a75,
+        0 0 10px #ff1a75,
+        0 0 20px #ff1a75,
+        0 0 40px #ff1a75,
+        0 0 80px #ff1a75;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Dökülen kalpler */
+.falling-heart {
+    position: fixed;
+    top: 0;
+    color: #ff3366;
+    user-select: none;
+    pointer-events: none;
+    font-family: "Arial Black", Gadget, sans-serif;
+    z-index: 10;
+}
+
+.falling-heart {
+    position: fixed;
+    top: 0;
+    user-select: none;
+    pointer-events: none;
+    font-family: "Arial Black", Gadget, sans-serif;
+    z-index: 10;
+
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    backface-visibility: hidden;
+
+    /* Glow efektini JS ile ayarlıyoruz, burayı minimal tutuyoruz */
+    text-shadow:
+        0 0 3px currentColor,
+        0 0 6px currentColor,
+        0 0 8px currentColor;
+    filter: drop-shadow(0 0 3px currentColor);
+}
+
+}

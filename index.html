@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalp Animasyonu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Kalp sahibinin ismini girerek devam edebilirsiniz</h1>
+        <input type="text" id="nameInput" placeholder="İsim girin...">
+    </div>
+
+    <div id="confirmation" class="hidden">
+        <p class="confirm-text">Kalbinizi vermek istediğinize emin misiniz?</p>
+        <button id="confirmBtn">Evet</button>
+    </div>
+
+    <canvas id="canvas" class="hidden"></canvas>
+
+    <!-- Ortadaki "Sudemiçem" yazısı, başlangıçta gizli -->
+    <div id="centerText" class="hidden">Sudemiçem</div>
+
+    <script src="{{ url_for('static', filename='heart.js') }}"></script>
+
+    <script>
+        const input = document.getElementById("nameInput");
+        const confirmation = document.getElementById("confirmation");
+        const button = document.getElementById("confirmBtn");
+        const canvas = document.getElementById("canvas");
+        const container = document.querySelector(".container");
+        const centerText = document.getElementById("centerText");
+
+        input.addEventListener("input", () => {
+            if (input.value.trim().toLowerCase() === "sude") {
+                confirmation.classList.remove("hidden");
+            } else {
+                confirmation.classList.add("hidden");
+                canvas.classList.add("hidden");
+                centerText.classList.add("hidden");
+                container.classList.remove("hidden");
+            }
+        });
+
+        button.addEventListener("click", () => {
+            // Arka plan yazılarını gizle
+            container.classList.add("hidden");
+            confirmation.classList.add("hidden");
+            // Neon kalp ve yazıyı göster
+            canvas.classList.remove("hidden");
+            centerText.classList.remove("hidden");
+            startNeonHeart();
+            startFallingHearts();
+        });
+
+        // Kalplerin düşme animasyonu
+function startFallingHearts() {
+    const heartContainer = document.createElement("div");
+    heartContainer.id = "heartContainer";
+    document.body.appendChild(heartContainer);
+
+    heartContainer.style.position = "fixed";
+    heartContainer.style.top = 0;
+    heartContainer.style.left = 0;
+    heartContainer.style.width = "100%";
+    heartContainer.style.height = "100%";
+    heartContainer.style.pointerEvents = "none";
+    heartContainer.style.zIndex = "10";
+    heartContainer.style.overflow = "visible";
+
+function createHeart(side) {
+    const heart = document.createElement("div");
+    heart.className = "falling-heart";
+    heart.textContent = "♥";
+
+    // Rastgele pembe veya mavi renk seç
+    const colors = [
+        "#ff1a75",  // neon pembe
+        "#3399ff"   // neon mavi
+    ];
+    const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+    heart.style.color = chosenColor;
+
+    // Yanlara göre left belirle
+    if (side === "left") {
+        heart.style.left = (Math.random() * 15) + "vw";  // soldan %0-15 arası
+    } else {
+        heart.style.left = (85 + Math.random() * 15) + "vw"; // sağdan %85-100 arası
+    }
+
+    heart.style.fontSize = (12 + Math.random() * 18) + "px";
+    heart.style.opacity = 0.7 + Math.random() * 0.3;
+    heart.style.top = "-30px";
+
+    // Neon glow rengini renk seçimine göre ayarlayalım (CSS filter ve shadow)
+if (chosenColor === "#ff1a75") {
+    heart.style.textShadow =
+        "0 0 3px #ff1a75, 0 0 6px #ff4da6, 0 0 8px #ff3399";
+    heart.style.filter = "drop-shadow(0 0 3px #ff1a75)";
+} else {
+    heart.style.textShadow =
+        "0 0 3px #3399ff, 0 0 6px #66b3ff, 0 0 8px #3399ff";
+    heart.style.filter = "drop-shadow(0 0 3px #3399ff)";
+}
+	
+
+    heartContainer.appendChild(heart);
+
+    const duration = 4000 + Math.random() * 3000;
+    const rotateDegree = (Math.random() * 60) - 30; // -30 ile +30 derece arası dönüş
+
+    heart.animate([
+        { transform: `translateY(0) rotate(0deg)`, opacity: heart.style.opacity },
+        { transform: `translateY(110vh) rotate(${rotateDegree}deg)`, opacity: 0 }
+    ], {
+        duration: duration,
+        easing: "linear"
+    });
+
+    setTimeout(() => heart.remove(), duration);
+}
+
+
+    // Aralıklı iki yanda kalp oluştur
+    setInterval(() => createHeart("left"), 350);
+    setInterval(() => createHeart("right"), 350);
+}
+
+    </script>
+</body>
+</html>
